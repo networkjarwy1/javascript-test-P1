@@ -4,7 +4,32 @@
 // funkce vrátí pole string hodnot kde každá má délku maxLength, které vychází z arrayInput a bude obsahovat pouze stringy s délkou v rozmezí minLength (včetně) až maxLength (včetně), delší nebo kratší budou přeskočeny, ty co byly v rozmezí budou doplněny pomocí symbolToFill na délku maxLength,
 // v případě prázdného nebo nedefinovaného arrayInput a nebo pokud požadavkům na délku nepdovídají žádné hodnoty, tak bude vráceno prázdné pole
 // například pro ["apple", "banana", "kiwi", "orange", "strawberry"], 5, 6, bude výsledek ["appleX", "banana", "orange"]
-function processArrayItems(arrayInput, minLength, maxLength, symbolToFill) {}
+function processArrayItems(
+  arrayInput,
+  minLength,
+  maxLength,
+  symbolToFill = "X",
+) {
+  if (!arrayInput || arrayInput.length === 0) {
+    return [];
+  }
+
+  const filteredArray = arrayInput.filter(
+    (item) => item.length >= minLength && item.length <= maxLength,
+  );
+
+  if (filteredArray.length === 0) {
+    return [];
+  }
+
+  return filteredArray.map((item) => {
+    if (item.length < maxLength) {
+      const fillLength = maxLength - item.length;
+      return item + symbolToFill.repeat(fillLength);
+    }
+    return item;
+  });
+}
 
 // oblast volání funkcí
 const fruits = ["apple", "banana", "kiwi", "orange", "strawberry"];
